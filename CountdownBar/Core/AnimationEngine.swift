@@ -32,13 +32,11 @@ enum AnimationEngine {
     }
 
     private static func bundledImage(named name: String) -> NSImage? {
-        if let url = Bundle.main.url(forResource: name, withExtension: "png", subdirectory: "image") {
-            return NSImage(contentsOf: url)
-        }
-        if let url = Bundle.main.url(forResource: name, withExtension: "png") {
-            return NSImage(contentsOf: url)
-        }
-        return nil
+        guard let resourceURL = Bundle.main.resourceURL else { return nil }
+        let inSubdir = resourceURL.appendingPathComponent("image/\(name).png")
+        if let image = NSImage(contentsOf: inSubdir) { return image }
+        let atRoot = resourceURL.appendingPathComponent("\(name).png")
+        return NSImage(contentsOf: atRoot)
     }
 
     private static func sfFallback(at index: Int) -> NSImage? {
