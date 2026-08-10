@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		DA4ADF3B3029A0EF00A2FD33 /* CountdownCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountdownCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA4ADF3B3029A0EF00A2FD33 /* CountdownBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountdownBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,7 +40,7 @@
 		DA4ADF3C3029A0EF00A2FD33 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DA4ADF3B3029A0EF00A2FD33 /* CountdownCat.app */,
+				DA4ADF3B3029A0EF00A2FD33 /* CountdownBar.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DA4ADF3A3029A0EF00A2FD33 /* CountdownCat */ = {
+		DA4ADF3A3029A0EF00A2FD33 /* CountdownBar */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA4ADF463029A0F000A2FD33 /* Build configuration list for PBXNativeTarget "CountdownCat" */;
+			buildConfigurationList = DA4ADF463029A0F000A2FD33 /* Build configuration list for PBXNativeTarget "CountdownBar" */;
 			buildPhases = (
 				DA4ADF373029A0EF00A2FD33 /* Sources */,
 				DA4ADF383029A0EF00A2FD33 /* Frameworks */,
@@ -63,11 +63,11 @@
 			fileSystemSynchronizedGroups = (
 				DA4ADF3D3029A0EF00A2FD33 /* CountdownCat */,
 			);
-			name = CountdownCat;
+			name = CountdownBar;
 			packageProductDependencies = (
 			);
-			productName = CountdownCat;
-			productReference = DA4ADF3B3029A0EF00A2FD33 /* CountdownCat.app */;
+			productName = CountdownBar;
+			productReference = DA4ADF3B3029A0EF00A2FD33 /* CountdownBar.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -99,7 +99,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DA4ADF3A3029A0EF00A2FD33 /* CountdownCat */,
+				DA4ADF3A3029A0EF00A2FD33 /* CountdownBar */,
 			);
 		};
 /* End PBXProject section */
@@ -271,7 +271,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = JunCh.CountdownCat;
+				PRODUCT_BUNDLE_IDENTIFIER = JunCh.CountdownBar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -311,7 +311,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = JunCh.CountdownCat;
+				PRODUCT_BUNDLE_IDENTIFIER = JunCh.CountdownBar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -335,7 +335,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA4ADF463029A0F000A2FD33 /* Build configuration list for PBXNativeTarget "CountdownCat" */ = {
+		DA4ADF463029A0F000A2FD33 /* Build configuration list for PBXNativeTarget "CountdownBar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA4ADF473029A0F000A2FD33 /* Debug */,

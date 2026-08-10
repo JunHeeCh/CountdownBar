@@ -1,11 +1,11 @@
-# CountdownCat — 아키텍처 문서
+# CountdownBar — 아키텍처 문서
 
 ## 파일 구조
 
 ```
-CountdownCat/
+CountdownBar/
 ├── App/
-│   ├── CountdownCatApp.swift   # 앱 진입점 (@main). AppDelegate를 연결하는 껍데기
+│   ├── CountdownBarApp.swift   # 앱 진입점 (@main). AppDelegate를 연결하는 껍데기
 │   └── AppDelegate.swift       # 메뉴바 아이템, 설정 패널, 애니메이션 타이머 소유
 ├── Core/
 │   ├── AppState.swift          # 전체 상태의 단일 출처 (ObservableObject)
@@ -24,7 +24,7 @@ CountdownCat/
 
 ```
 앱 시작
-  └─▶ CountdownCatApp (@main)
+  └─▶ CountdownBarApp (@main)
         └─▶ AppDelegate.applicationDidFinishLaunching()
               ├─▶ NSStatusItem 생성 (메뉴바 아이템)
               ├─▶ KeyablePanel 생성 (설정 패널)
@@ -180,7 +180,7 @@ AppDelegate.rescheduleAnimation(remaining:)
 사용자가 "애니메이션 이미지 등록" 버튼 클릭
   └─▶ ImageImportService.pickImages()
         ├─▶ NSOpenPanel (다중 선택, 이미지 파일 전체 허용)
-        ├─▶ 선택된 이미지를 Application Support/CountdownCat/ 에 복사
+        ├─▶ 선택된 이미지를 Application Support/CountdownBar/ 에 복사
         └─▶ 파일명 배열 반환
               └─▶ appState.customFrameNames = 파일명 배열
                     └─▶ PersistenceService.saveCustomFrameNames()

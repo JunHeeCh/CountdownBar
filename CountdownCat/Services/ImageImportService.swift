@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 enum ImageImportService {
     private static var framesDirectory: URL {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        let dir = base.appendingPathComponent("CountdownCat/Frames", isDirectory: true)
+        let dir = base.appendingPathComponent("CountdownBar/Frames", isDirectory: true)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir
     }

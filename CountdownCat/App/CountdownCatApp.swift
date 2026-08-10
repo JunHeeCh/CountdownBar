@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct CountdownCatApp: App {
+struct CountdownBarApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {

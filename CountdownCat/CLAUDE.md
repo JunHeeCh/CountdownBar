@@ -1,4 +1,4 @@
-# CountdownCat — 프로젝트 컨텍스트
+# CountdownBar — 프로젝트 컨텍스트
 
 ## 개요
 macOS 메뉴바 상주형 카운트다운 타이머 앱. RunCat(https://github.com/Kyome22/menubar_runcat)의 구조를 참고해 만들고 있음. 목적은 설정한 목표 시각까지 남은 시간을 메뉴바에서 실시간으로 보여주는 것.
@@ -11,9 +11,9 @@ macOS 메뉴바 상주형 카운트다운 타이머 앱. RunCat(https://github.c
 ## 아키텍처
 
 ```
-CountdownCat/
+CountdownBar/
 ├── App/
-│   ├── CountdownCatApp.swift   # @main, Settings{EmptyView()}만 갖는 껍데기 Scene
+│   ├── CountdownBarApp.swift   # @main, Settings{EmptyView()}만 갖는 껍데기 Scene
 │   └── AppDelegate.swift       # 메뉴바 아이템, 설정 패널, 애니메이션 타이머를 전부 소유하는 핵심 컨트롤러
 ├── Core/
 │   ├── AppState.swift          # ObservableObject. 전체 상태의 단일 출처. SyncStatus enum 포함
@@ -24,7 +24,7 @@ CountdownCat/
 ├── Services/
 │   ├── PersistenceService.swift   # UserDefaults 저장/복원
 │   └── ImageImportService.swift   # NSOpenPanel로 사용자 이미지를 선택해 Application Support 폴더에 복사·로드
-└── CountdownCat.entitlements   # App Sandbox + 네트워크 클라이언트 권한
+└── CountdownBar.entitlements   # App Sandbox + 네트워크 클라이언트 권한
 ```
 
 ## 핵심 설계 결정 및 이유
@@ -62,7 +62,7 @@ CountdownCat/
    - HTTP HEAD 요청 → 응답 `Date` 헤더 파싱 → 왕복 지연의 절반을 보정해 오프셋 계산
    - 실패 시 `serverTimeOffset = 0` 으로 폴백 (로컬 시간 그대로 사용)
    - URL, on/off 토글은 UserDefaults에 영속화
-   - App Sandbox 환경에서 네트워크를 사용하려면 `CountdownCat.entitlements`에 `com.apple.security.network.client = true` 필수
+   - App Sandbox 환경에서 네트워크를 사용하려면 `CountdownBar.entitlements`에 `com.apple.security.network.client = true` 필수
 
 10. **DatePicker 로케일: `Locale.Components(identifier: "ko_KR")` + `hourCycle = .zeroToTwentyThree`**
     한국식 년/월/일 순서 + 24시간제 강제 적용. 시스템 설정과 무관하게 항상 24시간으로 표시.
@@ -89,6 +89,3 @@ CountdownCat/
 - 임계값 역전 방어 로직
 - 코드 정리 및 불필요 파일(`StatusBarContentView.swift` 등 이전 시도의 잔재) 정리
 
-## 개발자 배경 참고
-- 백엔드(Java/Spring) 개발자, macOS 네이티브 개발은 이번이 처음
-- Swift/AppKit 개념을 백엔드 유사 개념에 빗대어 설명받는 방식으로 학습 중
