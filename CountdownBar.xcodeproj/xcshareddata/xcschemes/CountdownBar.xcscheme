@@ -18,7 +18,7 @@
                BlueprintIdentifier = "DA4ADF3A3029A0EF00A2FD33"
                BuildableName = "CountdownBar.app"
                BlueprintName = "CountdownBar"
-               ReferencedContainer = "container:CountdownCat.xcodeproj">
+               ReferencedContainer = "container:CountdownBar.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,7 +48,7 @@
             BlueprintIdentifier = "DA4ADF3A3029A0EF00A2FD33"
             BuildableName = "CountdownBar.app"
             BlueprintName = "CountdownBar"
-            ReferencedContainer = "container:CountdownCat.xcodeproj">
+            ReferencedContainer = "container:CountdownBar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -65,7 +65,7 @@
             BlueprintIdentifier = "DA4ADF3A3029A0EF00A2FD33"
             BuildableName = "CountdownBar.app"
             BlueprintName = "CountdownBar"
-            ReferencedContainer = "container:CountdownCat.xcodeproj">
+            ReferencedContainer = "container:CountdownBar.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

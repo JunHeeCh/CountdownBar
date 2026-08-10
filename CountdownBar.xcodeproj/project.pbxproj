@@ -11,7 +11,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		DA4ADF3D3029A0EF00A2FD33 /* CountdownCat */ = {
+		DA4ADF3D3029A0EF00A2FD33 /* CountdownBar */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CountdownBar;
 			sourceTree = "<group>";
@@ -32,7 +32,7 @@
 		DA4ADF323029A0EF00A2FD33 = {
 			isa = PBXGroup;
 			children = (
-				DA4ADF3D3029A0EF00A2FD33 /* CountdownCat */,
+				DA4ADF3D3029A0EF00A2FD33 /* CountdownBar */,
 				DA4ADF3C3029A0EF00A2FD33 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +61,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				DA4ADF3D3029A0EF00A2FD33 /* CountdownCat */,
+				DA4ADF3D3029A0EF00A2FD33 /* CountdownBar */,
 			);
 			name = CountdownBar;
 			packageProductDependencies = (
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DA4ADF363029A0EF00A2FD33 /* Build configuration list for PBXProject "CountdownCat" */;
+			buildConfigurationList = DA4ADF363029A0EF00A2FD33 /* Build configuration list for PBXProject "CountdownBar" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -326,7 +326,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DA4ADF363029A0EF00A2FD33 /* Build configuration list for PBXProject "CountdownCat" */ = {
+		DA4ADF363029A0EF00A2FD33 /* Build configuration list for PBXProject "CountdownBar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA4ADF443029A0F000A2FD33 /* Debug */,

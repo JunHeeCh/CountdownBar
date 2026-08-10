@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CountdownCat.iml" filepath="$PROJECT_DIR$/.idea/CountdownCat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/CountdownBar.iml" filepath="$PROJECT_DIR$/.idea/CountdownBar.iml" />
     </modules>
   </component>
 </project>
