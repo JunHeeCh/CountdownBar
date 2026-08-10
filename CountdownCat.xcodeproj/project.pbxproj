@@ -13,7 +13,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		DA4ADF3D3029A0EF00A2FD33 /* CountdownCat */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = CountdownCat;
+			path = CountdownBar;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
