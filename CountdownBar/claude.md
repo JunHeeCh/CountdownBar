@@ -79,13 +79,17 @@ CountdownBar/
 - [x] 설정창 위치 안정화 (NSPanel + screen 좌표 기반 오른쪽 끝 정렬)
 - [x] 설정창 둥근 모서리
 - [x] 서버 시간 동기화 (URL 입력, 토글, 수동 재동기화, 동기화 시각/오프셋 표시)
+- [x] CountdownCat → CountdownBar 리네이밍 완료 (xcodeproj, 소스, 잔재 파일 전체)
+- [x] 앱 아이콘 설정 (default1.png 기반, 전 사이즈 AppIcon.appiconset 반영)
+- [x] LSUIElement = YES — Dock 아이콘 숨김 (메뉴바 전용 에이전트 앱)
 
 ## 알려진 미해결/보류 이슈
 - `RemainingFormatter.color`에서 `urgentThreshold >= warningThreshold`로 슬라이더를 설정할 경우 `switch` 구간이 역전되어 런타임 이슈 가능성 있음. 방어 로직(min/max 클램핑 또는 UI 레벨 제약) 미적용.
 
 ## 다음 단계 후보 (미정, 우선순위 논의 필요)
-- 앱 아이콘 설정
 - 로그인 시 자동 실행
 - 임계값 역전 방어 로직
-- 코드 정리 및 불필요 파일(`StatusBarContentView.swift` 등 이전 시도의 잔재) 정리
+
+## 기타
+- GitHub: https://github.com/JunHeeCh/CountdownBar.git
 
