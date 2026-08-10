@@ -9,6 +9,7 @@ enum PersistenceService {
     private static let customFrameNamesKey = "customFrameNames"
     private static let useServerTimeKey = "useServerTime"
     private static let serverTimeURLKey = "serverTimeURL"
+    private static let memoKey = "memo"
     
     static func saveTargetDate(_ date: Date) {
         UserDefaults.standard.set(date, forKey: targetDateKey)
@@ -76,8 +77,6 @@ enum PersistenceService {
     static func loadServerTimeURL() -> String? {
         UserDefaults.standard.string(forKey: serverTimeURLKey)
     }
-
-    private static let memoKey = "memo"
 
     static func saveMemo(_ value: String) {
         UserDefaults.standard.set(value, forKey: memoKey)

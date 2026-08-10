@@ -55,8 +55,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self?.statusItem.button?.toolTip = memo.isEmpty ? nil : memo
             }
             .store(in: &cancellables)
-        
-        render()
     }
     
     /// 텍스트 + 아이콘을 하나의 attributedTitle로 합쳐서 AppKit이 폭 계산을 전담하게 함

@@ -36,9 +36,6 @@ struct SettingsView: View {
                             appState.memo = String(newValue.prefix(20))
                         }
                     }
-                    .onChange(of: memoFocused) { focused in
-                        if !focused { isEditingMemo = false }
-                    }
             } else {
                 Button {
                     isEditingMemo = true

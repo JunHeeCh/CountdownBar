@@ -35,8 +35,4 @@ enum ImageImportService {
         let url = framesDirectory.appendingPathComponent(fileName)
         return NSImage(contentsOf: url)
     }
-    
-    static func clearAll() {
-        try? FileManager.default.removeItem(at: framesDirectory)
-    }
 }

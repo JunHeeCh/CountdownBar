@@ -28,7 +28,6 @@ enum AnimationEngine {
                 ?? sfFallback(at: index)
         }
 
-        image?.size = NSSize(width: 18, height: 18)
         return image
     }
 

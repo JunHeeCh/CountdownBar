@@ -79,7 +79,7 @@ class AppState: ObservableObject {
     }
 
     @Published var syncStatus: SyncStatus = .idle
-    @Published var lastSyncTime: Date? = nil
+    @Published var lastSyncTime: Date?
     var serverTimeOffset: TimeInterval = 0
 
     private var timer: Timer?
@@ -106,7 +106,7 @@ class AppState: ObservableObject {
         }
     }
     
-    func start() {
+    private func start() {
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             self?.tick()
         }
