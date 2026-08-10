@@ -187,7 +187,12 @@ AppDelegate.rescheduleAnimation(remaining:)
 
 이후 AnimationEngine.frame(at: index, customNames:)
   ├─▶ customNames 있으면 → ImageImportService.loadImage(named:) 로 로드
-  └─▶ 없으면 → 번들 기본 이미지(default1/2.png) → 없으면 SF Symbol(cat/cat.fill) 폴백
+  └─▶ 없으면 → bundledImage(named:) → 없으면 SF Symbol(cat/cat.fill) 폴백
+
+bundledImage 로딩 순서:
+  Bundle.main.resourceURL + "image/{name}.png"  (서브폴더)
+  → Bundle.main.resourceURL + "{name}.png"       (루트)
+  * Bundle.main.url(forResource:) API는 릴리즈 빌드에서 누락되는 케이스 있어 직접 경로 구성 방식 사용
 ```
 
 ---

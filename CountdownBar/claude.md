@@ -85,6 +85,7 @@ CountdownBar/
 - [x] 메모 기능 (설정 패널 클릭 편집, 메뉴바 툴팁 표시, 20자 제한, UserDefaults 영속화)
 - [x] 코드 최적화 (dead code 제거, 중복 render 호출 제거, start() private화 등)
 - [x] GitHub Releases 미서명 배포 (ditto ZIP, 우클릭→열기 안내)
+- [x] 번들 기본 이미지 로딩 버그 수정 (Bundle.main.url(forResource:) → resourceURL 직접 경로 방식)
 
 ## 알려진 미해결/보류 이슈
 - `RemainingFormatter.color`에서 `urgentThreshold >= warningThreshold`로 슬라이더를 설정할 경우 `switch` 구간이 역전되어 런타임 이슈 가능성 있음. 방어 로직(min/max 클램핑 또는 UI 레벨 제약) 미적용.
