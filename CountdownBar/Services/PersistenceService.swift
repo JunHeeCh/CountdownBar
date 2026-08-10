@@ -76,4 +76,14 @@ enum PersistenceService {
     static func loadServerTimeURL() -> String? {
         UserDefaults.standard.string(forKey: serverTimeURLKey)
     }
+
+    private static let memoKey = "memo"
+
+    static func saveMemo(_ value: String) {
+        UserDefaults.standard.set(value, forKey: memoKey)
+    }
+
+    static func loadMemo() -> String? {
+        UserDefaults.standard.string(forKey: memoKey)
+    }
 }

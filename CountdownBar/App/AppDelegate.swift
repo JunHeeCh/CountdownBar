@@ -49,6 +49,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.rescheduleAnimation(for: remaining)
         }
         .store(in: &cancellables)
+
+        appState.$memo
+            .sink { [weak self] memo in
+                self?.statusItem.button?.toolTip = memo.isEmpty ? nil : memo
+            }
+            .store(in: &cancellables)
         
         render()
     }

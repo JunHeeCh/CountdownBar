@@ -55,6 +55,10 @@ class AppState: ObservableObject {
         didSet { PersistenceService.saveCustomFrameNames(customFrameNames) }
     }
 
+    @Published var memo: String {
+        didSet { PersistenceService.saveMemo(memo) }
+    }
+
     @Published var useServerTime: Bool {
         didSet {
             PersistenceService.saveUseServerTime(useServerTime)
@@ -93,6 +97,7 @@ class AppState: ObservableObject {
         self.warningThresholdMinutes = PersistenceService.loadWarningThreshold() ?? 60
         self.showIcon = PersistenceService.loadShowIcon() ?? true
         self.customFrameNames = PersistenceService.loadCustomFrameNames() ?? []
+        self.memo = PersistenceService.loadMemo() ?? ""
         self.useServerTime = PersistenceService.loadUseServerTime() ?? false
         self.serverTimeURL = PersistenceService.loadServerTimeURL() ?? ""
         start()

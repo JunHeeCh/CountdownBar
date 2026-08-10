@@ -19,9 +19,46 @@ private func offsetLabel(_ offset: TimeInterval) -> String {
 
 struct SettingsView: View {
     @ObservedObject var appState: AppState
+    @State private var isEditingMemo = false
+    @FocusState private var memoFocused: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            if isEditingMemo {
+                TextField("메모 (예: 콘서트, 지원서 마감)", text: $appState.memo)
+                    .textFieldStyle(.roundedBorder)
+                    .font(.caption)
+                    .focused($memoFocused)
+                    .onSubmit { isEditingMemo = false }
+                    .onAppear { memoFocused = true }
+                    .onChange(of: appState.memo) { newValue in
+                        if newValue.count > 20 {
+                            appState.memo = String(newValue.prefix(20))
+                        }
+                    }
+                    .onChange(of: memoFocused) { focused in
+                        if !focused { isEditingMemo = false }
+                    }
+            } else {
+                Button {
+                    isEditingMemo = true
+                } label: {
+                    HStack(spacing: 4) {
+                        Text(appState.memo.isEmpty ? "메모 추가..." : appState.memo)
+                            .font(.caption)
+                            .foregroundColor(appState.memo.isEmpty ? .secondary : .primary)
+                        Spacer()
+                        Image(systemName: "pencil")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
+                    .padding(6)
+                    .background(Color(NSColor.controlBackgroundColor))
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                }
+                .buttonStyle(.plain)
+            }
+
             Text("목표 시각 설정")
                 .font(.headline)
 
@@ -108,5 +145,13 @@ struct SettingsView: View {
         }
         .padding()
         .frame(width: 240)
+        .background(
+            Color.clear
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    NSApp.keyWindow?.makeFirstResponder(nil)
+                    isEditingMemo = false
+                }
+        )
     }
 }
