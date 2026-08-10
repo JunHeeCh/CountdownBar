@@ -82,6 +82,9 @@ CountdownBar/
 - [x] CountdownCat → CountdownBar 리네이밍 완료 (xcodeproj, 소스, 잔재 파일 전체)
 - [x] 앱 아이콘 설정 (default1.png 기반, 전 사이즈 AppIcon.appiconset 반영)
 - [x] LSUIElement = YES — Dock 아이콘 숨김 (메뉴바 전용 에이전트 앱)
+- [x] 메모 기능 (설정 패널 클릭 편집, 메뉴바 툴팁 표시, 20자 제한, UserDefaults 영속화)
+- [x] 코드 최적화 (dead code 제거, 중복 render 호출 제거, start() private화 등)
+- [x] GitHub Releases 미서명 배포 (ditto ZIP, 우클릭→열기 안내)
 
 ## 알려진 미해결/보류 이슈
 - `RemainingFormatter.color`에서 `urgentThreshold >= warningThreshold`로 슬라이더를 설정할 경우 `switch` 구간이 역전되어 런타임 이슈 가능성 있음. 방어 로직(min/max 클램핑 또는 UI 레벨 제약) 미적용.
@@ -90,6 +93,8 @@ CountdownBar/
 - 로그인 시 자동 실행
 - 임계값 역전 방어 로직
 
-## 기타
+## 배포
+- GitHub Releases (미서명): ditto로 ZIP 생성 → GitHub Releases에 수동 업로드
+- 릴리즈 URL: https://github.com/JunHeeCh/CountdownBar/releases
 - GitHub: https://github.com/JunHeeCh/CountdownBar.git
 

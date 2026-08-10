@@ -169,7 +169,7 @@ AppDelegate.rescheduleAnimation(remaining:)
 
 영속화 대상:
   targetDate, displayMode, urgentThresholdMinutes, warningThresholdMinutes,
-  showIcon, customFrameNames, useServerTime, serverTimeURL
+  showIcon, customFrameNames, memo, useServerTime, serverTimeURL
 ```
 
 ---
@@ -180,14 +180,34 @@ AppDelegate.rescheduleAnimation(remaining:)
 사용자가 "애니메이션 이미지 등록" 버튼 클릭
   └─▶ ImageImportService.pickImages()
         ├─▶ NSOpenPanel (다중 선택, 이미지 파일 전체 허용)
-        ├─▶ 선택된 이미지를 Application Support/CountdownBar/ 에 복사
+        ├─▶ 선택된 이미지를 Application Support/CountdownBar/Frames/ 에 복사
         └─▶ 파일명 배열 반환
               └─▶ appState.customFrameNames = 파일명 배열
                     └─▶ PersistenceService.saveCustomFrameNames()
 
 이후 AnimationEngine.frame(at: index, customNames:)
-  └─▶ customNames 비어있지 않으면 → ImageImportService.loadImage(named:) 로 로드
-  └─▶ 비어있으면 → SF Symbol 폴백
+  ├─▶ customNames 있으면 → ImageImportService.loadImage(named:) 로 로드
+  └─▶ 없으면 → 번들 기본 이미지(default1/2.png) → 없으면 SF Symbol(cat/cat.fill) 폴백
+```
+
+---
+
+### 8. 메모
+
+```
+사용자가 메모 영역 클릭
+  └─▶ isEditingMemo = true → TextField 표시 + 자동 포커스
+        ├─▶ Enter 입력 → onSubmit → isEditingMemo = false
+        └─▶ 패널 내 다른 곳 클릭
+              └─▶ background onTapGesture
+                    ├─▶ NSApp.keyWindow?.makeFirstResponder(nil)  (AppKit 포커스 해제)
+                    └─▶ isEditingMemo = false
+
+appState.$memo 변경
+  └─▶ AppDelegate Combine 구독
+        └─▶ statusItem.button?.toolTip 갱신 (빈 문자열이면 nil)
+
+영속화: PersistenceService.saveMemo() → UserDefaults
 ```
 
 ---
@@ -202,7 +222,7 @@ PersistenceService   (저장소, 순수 함수)
   AppDelegate        ←——Combine——— AppState.$remaining
   (렌더링, 패널)                   AppState.$showIcon
         ↓                          AppState.$customFrameNames
-  AnimationEngine    (순수 함수, 이미지/간격 계산)
+  AnimationEngine    (순수 함수, 이미지/간격 계산)        AppState.$memo → toolTip 갱신
   RemainingFormatter (순수 함수, 텍스트/색상 계산)
         ↑
   SettingsView       (SwiftUI, @ObservedObject appState)
