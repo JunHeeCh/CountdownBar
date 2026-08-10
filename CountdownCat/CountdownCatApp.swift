@@ -1,17 +1,12 @@
-//
-//  CountdownCatApp.swift
-//  CountdownCat
-//
-//  Created by cho on 8/10/26.
-//
-
 import SwiftUI
 
 @main
 struct CountdownCatApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        Settings {
+            EmptyView()
         }
     }
 }
