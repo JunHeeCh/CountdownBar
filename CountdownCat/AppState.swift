@@ -79,6 +79,12 @@ class AppState: ObservableObject {
     var serverTimeOffset: TimeInterval = 0
 
     private var timer: Timer?
+    private static let httpDateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+        return f
+    }()
     
     init() {
         self.targetDate = PersistenceService.loadTargetDate() ?? Date().addingTimeInterval(3600)
@@ -103,7 +109,9 @@ class AppState: ObservableObject {
     
     private func tick() {
         let now = Date().addingTimeInterval(serverTimeOffset)
-        remaining = targetDate.timeIntervalSince(now)
+        let newRemaining = targetDate.timeIntervalSince(now)
+        if newRemaining <= 0 && remaining <= 0 { return }
+        remaining = newRemaining
         displayText = RemainingFormatter.format(remaining, mode: displayMode)
     }
 
@@ -144,10 +152,7 @@ class AppState: ObservableObject {
     }
 
     private func parseHTTPDate(_ string: String) -> Date? {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
-        return formatter.date(from: string)
+        Self.httpDateFormatter.date(from: string)
     }
     
     var color: Color {

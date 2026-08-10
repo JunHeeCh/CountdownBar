@@ -38,13 +38,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         panel.contentViewController = NSHostingController(rootView: contentView)
         settingsPanel = panel
         
-        Publishers.CombineLatest4(
-            appState.$displayText,
+        Publishers.CombineLatest3(
             appState.$remaining,
             appState.$showIcon,
             appState.$customFrameNames
         )
-        .sink { [weak self] text, remaining, showIcon, _ in
+        .sink { [weak self] remaining, _, _ in
             guard let self = self else { return }
             self.render()
             self.rescheduleAnimation(for: remaining)

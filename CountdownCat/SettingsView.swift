@@ -6,6 +6,12 @@ private let syncTimeFormatter: DateFormatter = {
     return f
 }()
 
+private let koreanLocale24h: Locale = {
+    var components = Locale.Components(identifier: "ko_KR")
+    components.hourCycle = .zeroToTwentyThree
+    return Locale(components: components)
+}()
+
 private func offsetLabel(_ offset: TimeInterval) -> String {
     if abs(offset) < 0.05 { return "오차 없음" }
     return String(format: "%+.2f초 보정", offset)
@@ -13,13 +19,12 @@ private func offsetLabel(_ offset: TimeInterval) -> String {
 
 struct SettingsView: View {
     @ObservedObject var appState: AppState
-    @State private var selectedMode: DisplayMode = .dday
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("목표 시각 설정")
                 .font(.headline)
-            
+
             DatePicker(
                 "",
                 selection: $appState.targetDate,
@@ -27,21 +32,14 @@ struct SettingsView: View {
             )
             .datePickerStyle(.field)
             .labelsHidden()
-            .environment(\.locale, {
-                var components = Locale.Components(identifier: "ko_KR")
-                components.hourCycle = .zeroToTwentyThree
-                return Locale(components: components)
-            }())
-            
-            Picker("표시 방식", selection: $selectedMode) {
+            .environment(\.locale, koreanLocale24h)
+
+            Picker("표시 방식", selection: $appState.displayMode) {
                 ForEach(DisplayMode.allCases, id: \.self) { mode in
                     Text(mode.rawValue).tag(mode)
                 }
             }
             .pickerStyle(.segmented)
-            .onChange(of: selectedMode) { newValue in
-                appState.displayMode = newValue
-            }
             
             Divider()
             
@@ -110,8 +108,5 @@ struct SettingsView: View {
         }
         .padding()
         .frame(width: 240)
-        .onAppear {
-            selectedMode = appState.displayMode
-        }
     }
 }
