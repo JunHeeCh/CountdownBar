@@ -66,20 +66,14 @@ URL을 입력하고 동기화하면, 이후엔 인터넷 연결 없이도 서버
 
 ---
 
-## 설치 방법
+## 다운로드
 
-> 현재 직접 빌드가 필요합니다.
+**[⬇ 최신 버전 다운로드](https://github.com/JunHeeCh/CountdownBar/releases/latest)**
 
-1. 저장소를 클론합니다.
-   ```bash
-   git clone https://github.com/JunHeeCh/CountdownBar.git
-   ```
-
-2. `CountdownBar.xcodeproj`를 Xcode로 엽니다.
-
-3. 상단 메뉴 **Signing & Capabilities**에서 개발자 계정을 연결합니다.
-
-4. `⌘R`로 빌드 및 실행합니다.
+1. 위 링크에서 `CountdownBar.zip`을 다운로드합니다.
+2. 압축을 풀고 `CountdownBar.app`을 **응용 프로그램** 폴더로 이동합니다.
+3. **처음 실행 시:** Gatekeeper 경고가 뜨면 앱 아이콘을 **우클릭 → 열기**를 선택하세요.
+   > Apple 공증을 거치지 않은 앱이라 최초 1회만 이 과정이 필요합니다.
 
 ---
 
@@ -90,6 +84,20 @@ URL을 입력하고 동기화하면, 이후엔 인터넷 연결 없이도 서버
 3. 목표 시각을 입력합니다. (년/월/일, 24시간제)
 4. 표시 방식과 색상 기준을 취향에 맞게 조절합니다.
 5. 패널 바깥을 클릭하면 닫힙니다.
+
+---
+
+## 직접 빌드하기
+
+소스에서 직접 빌드하고 싶다면:
+
+1. 저장소를 클론합니다.
+   ```bash
+   git clone https://github.com/JunHeeCh/CountdownBar.git
+   ```
+2. `CountdownBar.xcodeproj`를 Xcode로 엽니다.
+3. **Signing & Capabilities**에서 개발자 계정을 연결합니다.
+4. `⌘R`로 빌드 및 실행합니다.
 
 ---
 
@@ -104,6 +112,6 @@ URL을 입력하고 동기화하면, 이후엔 인터넷 연결 없이도 서버
 
 마감을 잊지 마세요. CountdownBar가 알려줍니다.
 
-**[⬇ 다운로드 / 시작하기](#설치-방법)**
+**[⬇ 최신 버전 다운로드](https://github.com/JunHeeCh/CountdownBar/releases/latest)**
 
 </div>
