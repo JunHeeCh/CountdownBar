@@ -51,12 +51,19 @@ CountdownBar/
 
 ```
 AppState.init()
-  └─▶ start() → Timer(interval: 1초, repeats: true)
-        └─▶ tick() 매 1초 실행
-              ├─▶ remaining = targetDate.timeIntervalSince(Date() + offset)
-              ├─▶ remaining <= 0 && 이미 종료 상태? → return (불필요한 업데이트 차단)
-              └─▶ displayText = RemainingFormatter.format(remaining, mode)
+  ├─▶ start() → Timer(interval: 1초, repeats: true)
+  ├─▶ tick() 즉시 호출 (앱 시작 시 딜레이 없이 즉시 표시)
+  └─▶ NSWorkspace.didWakeNotification 등록 (절전 복귀 시 즉시 tick())
+
+tick() 매 1초 실행
+  ├─▶ newRemaining = max(0, targetDate.timeIntervalSince(Date() + offset))
+  │     * 음수 허용 안 함 — 종료 후에는 항상 0으로 유지
+  ├─▶ newRemaining == remaining? → return (값 변화 없으면 불필요한 업데이트 차단)
+  └─▶ remaining = newRemaining
+        └─▶ displayText = RemainingFormatter.format(remaining, mode)
 ```
+
+**sentinel 초기값**: `remaining = -1`로 초기화해 앱 시작 직후 첫 tick()이 항상 실행되도록 보장.
 
 **DisplayMode 별 포맷:**
 | 모드 | 예시 |
@@ -78,8 +85,9 @@ AppState.$remaining 변경
               │           ├─▶ customFrameNames 있으면 → Application Support에서 이미지 로드
               │           └─▶ 없으면 → SF Symbol (cat / cat.fill) 폴백
               │     └─▶ NSTextAttachment로 이미지를 텍스트 앞에 인라인 삽입
+              ├─▶ 이미지 비율 보존: 높이 16px 고정, 너비 = 16 × (원본 width / height)
               ├─▶ RemainingFormatter.color() → NSColor 결정
-              │     ├─▶ remaining < 0        → gray
+              │     ├─▶ remaining <= 0       → gray  (종료됨 포함)
               │     ├─▶ < urgentThreshold    → red
               │     ├─▶ < warningThreshold   → orange
               │     └─▶ 그 외               → primary
@@ -87,6 +95,8 @@ AppState.$remaining 변경
 ```
 
 텍스트와 아이콘을 `NSAttributedString` 하나로 합쳐 AppKit이 버튼 폭 계산을 전담하게 함 → 메뉴바 위치 안정.
+
+**@Published willSet 타이밍 주의**: `@Published`는 `willSet`에서 발화하므로 sink 실행 시점에 속성이 아직 이전 값임. `DispatchQueue.main.async`로 다음 RunLoop 사이클에 defer해 모든 속성이 새 값으로 확정된 후 render() 호출.
 
 ---
 
@@ -178,12 +188,18 @@ AppDelegate.rescheduleAnimation(remaining:)
 
 ```
 사용자가 "애니메이션 이미지 등록" 버튼 클릭
-  └─▶ ImageImportService.pickImages()
+  └─▶ ImageImportService.pickImages(replacing: oldNames)
         ├─▶ NSOpenPanel (다중 선택, 이미지 파일 전체 허용)
-        ├─▶ 선택된 이미지를 Application Support/CountdownBar/Frames/ 에 복사
+        ├─▶ 새 파일 저장 먼저 (frame_N_UUID.{원본확장자})
+        │     * 확장자 보존: JPEG → .jpg, PNG → .png 등 원본 포맷 그대로
+        ├─▶ 저장 성공 시 oldNames의 구 파일 삭제 (ImageImportService.deleteFrames)
         └─▶ 파일명 배열 반환
               └─▶ appState.customFrameNames = 파일명 배열
                     └─▶ PersistenceService.saveCustomFrameNames()
+
+"기본으로" 버튼 클릭 (커스텀 이미지 등록 상태일 때만 표시)
+  └─▶ ImageImportService.deleteFrames(customFrameNames)
+        └─▶ appState.customFrameNames = []
 
 이후 AnimationEngine.frame(at: index, customNames:)
   ├─▶ customNames 있으면 → ImageImportService.loadImage(named:) 로 로드

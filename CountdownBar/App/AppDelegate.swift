@@ -43,10 +43,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             appState.$showIcon,
             appState.$customFrameNames
         )
-        .sink { [weak self] remaining, _, _ in
+        .sink { [weak self] _, _, _ in
             guard let self = self else { return }
-            self.render()
-            self.rescheduleAnimation(for: remaining)
+            // @Published fires in willSet — defer to next RunLoop cycle so
+            // all properties have their new values before we read them.
+            DispatchQueue.main.async {
+                self.render()
+                self.rescheduleAnimation(for: self.appState.remaining)
+            }
         }
         .store(in: &cancellables)
 
@@ -63,10 +67,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if appState.showIcon {
             let image = AnimationEngine.frame(at: frameIndex, customNames: appState.customFrameNames)
-            image?.size = NSSize(width: 16, height: 16)
+            let targetHeight: CGFloat = 16
+            let rawSize = image?.size ?? NSSize(width: 16, height: 16)
+            let aspectRatio = rawSize.height > 0 ? rawSize.width / rawSize.height : 1
+            let displayWidth = targetHeight * aspectRatio
+            image?.size = NSSize(width: displayWidth, height: targetHeight)
             let attachment = NSTextAttachment()
             attachment.image = image
-            attachment.bounds = CGRect(x: 0, y: -3, width: 16, height: 16)
+            attachment.bounds = CGRect(x: 0, y: -3, width: displayWidth, height: targetHeight)
             fullString.append(NSAttributedString(attachment: attachment))
             fullString.append(NSAttributedString(string: " "))
         }

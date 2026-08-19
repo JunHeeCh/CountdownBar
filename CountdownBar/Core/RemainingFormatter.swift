@@ -35,15 +35,9 @@ enum RemainingFormatter {
         urgentThreshold: TimeInterval,
         warningThreshold: TimeInterval
     ) -> Color {
-        switch remaining {
-        case ..<0:
-            return .gray
-        case 0..<urgentThreshold:
-            return .red
-        case urgentThreshold..<warningThreshold:
-            return .orange
-        default:
-            return .primary
-        }
+        if remaining <= 0 { return .gray }
+        if remaining < urgentThreshold { return .red }
+        if remaining < warningThreshold { return .orange }
+        return .primary
     }
 }

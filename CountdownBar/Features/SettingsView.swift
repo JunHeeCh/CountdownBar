@@ -25,17 +25,15 @@ struct SettingsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             if isEditingMemo {
-                TextField("메모 (예: 콘서트, 지원서 마감)", text: $appState.memo)
+                TextField("메모 (예: 콘서트, 지원서 마감)", text: Binding(
+                    get: { appState.memo },
+                    set: { appState.memo = String($0.prefix(20)) }
+                ))
                     .textFieldStyle(.roundedBorder)
                     .font(.caption)
                     .focused($memoFocused)
                     .onSubmit { isEditingMemo = false }
                     .onAppear { memoFocused = true }
-                    .onChange(of: appState.memo) { newValue in
-                        if newValue.count > 20 {
-                            appState.memo = String(newValue.prefix(20))
-                        }
-                    }
             } else {
                 Button {
                     isEditingMemo = true
@@ -91,20 +89,24 @@ struct SettingsView: View {
             
             Toggle("아이콘 표시", isOn: $appState.showIcon)
 
-            Button(appState.customFrameNames.isEmpty ? "애니메이션 이미지 등록" : "이미지 다시 등록 (\(appState.customFrameNames.count)장)") {
-                if let names = ImageImportService.pickImages() {
-                    appState.customFrameNames = names
+            HStack {
+                Button(appState.customFrameNames.isEmpty ? "애니메이션 이미지 등록" : "이미지 다시 등록 (\(appState.customFrameNames.count)장)") {
+                    if let names = ImageImportService.pickImages(replacing: appState.customFrameNames) {
+                        appState.customFrameNames = names
+                    }
+                }
+                if !appState.customFrameNames.isEmpty {
+                    Button("기본으로") {
+                        ImageImportService.deleteFrames(appState.customFrameNames)
+                        appState.customFrameNames = []
+                    }
+                    .foregroundColor(.secondary)
                 }
             }
             
             Divider()
 
             Toggle("서버 시간 기준", isOn: $appState.useServerTime)
-                .onChange(of: appState.useServerTime) { enabled in
-                    if enabled && !appState.serverTimeURL.isEmpty {
-                        Task { await appState.syncServerTime() }
-                    }
-                }
 
             if appState.useServerTime {
                 TextField("https://naver.com", text: $appState.serverTimeURL)

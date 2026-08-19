@@ -86,9 +86,17 @@ CountdownBar/
 - [x] 코드 최적화 (dead code 제거, 중복 render 호출 제거, start() private화 등)
 - [x] GitHub Releases 미서명 배포 (ditto ZIP, 우클릭→열기 안내)
 - [x] 번들 기본 이미지 로딩 버그 수정 (Bundle.main.url(forResource:) → resourceURL 직접 경로 방식)
+- [x] 절전/재시작 후 즉시 시간 갱신 (NSWorkspace.didWakeNotification + init에서 tick() 즉시 호출)
+- [x] 목표 시각을 과거로 변경 시 타이머 프리즈 버그 수정 (remaining을 max(0,...) 클램핑)
+- [x] 커스텀 이미지 → 기본 이미지 복원 버튼 추가
+- [x] 가로 이미지 비율 보존 (높이 16px 고정, 너비 비율에 맞게 계산)
+- [x] 이미지 재등록 시 구 파일 자동 삭제 + 원본 확장자 보존
+- [x] @Published willSet 타이밍 이슈 수정 (DispatchQueue.main.async로 render 지연)
+- [x] useServerTime 토글 시 sync 로직을 AppState didSet으로 이전 (SettingsView onChange 제거)
+- [x] PersistenceService threshold 로드 안전성 개선 (object(forKey:) as? Double)
 
 ## 알려진 미해결/보류 이슈
-- `RemainingFormatter.color`에서 `urgentThreshold >= warningThreshold`로 슬라이더를 설정할 경우 `switch` 구간이 역전되어 런타임 이슈 가능성 있음. 방어 로직(min/max 클램핑 또는 UI 레벨 제약) 미적용.
+- `urgentThreshold >= warningThreshold`로 슬라이더를 설정할 경우 주황 범위가 사라지고 빨강만 표시됨. 방어 로직(min/max 클램핑 또는 UI 레벨 제약) 미적용.
 
 ## 다음 단계 후보 (미정, 우선순위 논의 필요)
 - 로그인 시 자동 실행

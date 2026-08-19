@@ -33,17 +33,15 @@ enum PersistenceService {
     }
     
     static func loadUrgentThreshold() -> Double? {
-        let value = UserDefaults.standard.double(forKey: urgentThresholdKey)
-        return value == 0 ? nil : value
+        UserDefaults.standard.object(forKey: urgentThresholdKey) as? Double
     }
-    
+
     static func saveWarningThreshold(_ minutes: Double) {
         UserDefaults.standard.set(minutes, forKey: warningThresholdKey)
     }
-    
+
     static func loadWarningThreshold() -> Double? {
-        let value = UserDefaults.standard.double(forKey: warningThresholdKey)
-        return value == 0 ? nil : value
+        UserDefaults.standard.object(forKey: warningThresholdKey) as? Double
     }
     
     static func saveShowIcon(_ value: Bool) {

@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import AppKit
 
 enum SyncStatus: Equatable {
     case idle
@@ -29,7 +30,7 @@ enum SyncStatus: Equatable {
 
 class AppState: ObservableObject {
     @Published var displayText: String = "설정 필요"
-    @Published var remaining: TimeInterval = 0
+    @Published var remaining: TimeInterval = -1
     
     @Published var targetDate: Date {
         didSet { PersistenceService.saveTargetDate(targetDate) }
@@ -62,7 +63,11 @@ class AppState: ObservableObject {
     @Published var useServerTime: Bool {
         didSet {
             PersistenceService.saveUseServerTime(useServerTime)
-            if !useServerTime {
+            if useServerTime {
+                if !serverTimeURL.isEmpty {
+                    Task { await syncServerTime() }
+                }
+            } else {
                 serverTimeOffset = 0
                 syncStatus = .idle
             }
@@ -98,11 +103,20 @@ class AppState: ObservableObject {
         self.showIcon = PersistenceService.loadShowIcon() ?? true
         self.customFrameNames = PersistenceService.loadCustomFrameNames() ?? []
         self.memo = PersistenceService.loadMemo() ?? ""
-        self.useServerTime = PersistenceService.loadUseServerTime() ?? false
         self.serverTimeURL = PersistenceService.loadServerTimeURL() ?? ""
+        self.useServerTime = PersistenceService.loadUseServerTime() ?? false
         start()
+        tick()
         if useServerTime && !serverTimeURL.isEmpty {
             Task { await self.syncServerTime() }
+        }
+
+        NSWorkspace.shared.notificationCenter.addObserver(
+            forName: NSWorkspace.didWakeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.tick()
         }
     }
     
@@ -114,8 +128,8 @@ class AppState: ObservableObject {
     
     private func tick() {
         let now = Date().addingTimeInterval(serverTimeOffset)
-        let newRemaining = targetDate.timeIntervalSince(now)
-        if newRemaining <= 0 && remaining <= 0 { return }
+        let newRemaining = max(0, targetDate.timeIntervalSince(now))
+        if newRemaining == remaining { return }
         remaining = newRemaining
         displayText = RemainingFormatter.format(remaining, mode: displayMode)
     }
