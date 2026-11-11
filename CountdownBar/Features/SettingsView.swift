@@ -17,6 +17,23 @@ private func offsetLabel(_ offset: TimeInterval) -> String {
     return String(format: "%+.2f초 보정", offset)
 }
 
+private struct QuickDateButton: View {
+    let label: String
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(label)
+                .font(.caption2)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(Color(NSColor.controlBackgroundColor))
+                .clipShape(RoundedRectangle(cornerRadius: 5))
+        }
+        .buttonStyle(.plain)
+    }
+}
+
 struct SettingsView: View {
     @ObservedObject var appState: AppState
     @State private var isEditingMemo = false
@@ -65,6 +82,21 @@ struct SettingsView: View {
             .datePickerStyle(.field)
             .labelsHidden()
             .environment(\.locale, koreanLocale24h)
+
+            HStack(spacing: 6) {
+                QuickDateButton(label: "지금") {
+                    appState.targetDate = Date()
+                }
+                QuickDateButton(label: "+30분") {
+                    appState.targetDate = Date().addingTimeInterval(30 * 60)
+                }
+                QuickDateButton(label: "+1시간") {
+                    appState.targetDate = Date().addingTimeInterval(3600)
+                }
+                QuickDateButton(label: "+3시간") {
+                    appState.targetDate = Date().addingTimeInterval(3 * 3600)
+                }
+            }
 
             Picker("표시 방식", selection: $appState.displayMode) {
                 ForEach(DisplayMode.allCases, id: \.self) { mode in

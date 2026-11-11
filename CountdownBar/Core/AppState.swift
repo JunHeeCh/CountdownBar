@@ -32,9 +32,7 @@ class AppState: ObservableObject {
     @Published var displayText: String = "설정 필요"
     @Published var remaining: TimeInterval = -1
     
-    @Published var targetDate: Date {
-        didSet { PersistenceService.saveTargetDate(targetDate) }
-    }
+    @Published var targetDate: Date
     
     @Published var displayMode: DisplayMode {
         didSet { PersistenceService.saveDisplayMode(displayMode) }
@@ -88,6 +86,7 @@ class AppState: ObservableObject {
     var serverTimeOffset: TimeInterval = 0
 
     private var timer: Timer?
+    private var cancellables = Set<AnyCancellable>()
     private static let httpDateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.locale = Locale(identifier: "en_US_POSIX")
@@ -105,6 +104,12 @@ class AppState: ObservableObject {
         self.memo = PersistenceService.loadMemo() ?? ""
         self.serverTimeURL = PersistenceService.loadServerTimeURL() ?? ""
         self.useServerTime = PersistenceService.loadUseServerTime() ?? false
+        $targetDate
+            .dropFirst()
+            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+            .sink { PersistenceService.saveTargetDate($0) }
+            .store(in: &cancellables)
+
         start()
         tick()
         if useServerTime && !serverTimeURL.isEmpty {
