@@ -88,13 +88,13 @@ struct SettingsView: View {
                     appState.targetDate = Date()
                 }
                 QuickDateButton(label: "+30분") {
-                    appState.targetDate = Date().addingTimeInterval(30 * 60)
+                    appState.targetDate = appState.targetDate.addingTimeInterval(30 * 60)
                 }
                 QuickDateButton(label: "+1시간") {
-                    appState.targetDate = Date().addingTimeInterval(3600)
+                    appState.targetDate = appState.targetDate.addingTimeInterval(3600)
                 }
                 QuickDateButton(label: "+3시간") {
-                    appState.targetDate = Date().addingTimeInterval(3 * 3600)
+                    appState.targetDate = appState.targetDate.addingTimeInterval(3 * 3600)
                 }
             }
 
